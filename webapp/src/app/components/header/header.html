@@ -1,0 +1,45 @@
+<header class="header">
+    <!-- Logo -->
+    <div class="logo">
+        <!-- <img src="logo.png" alt="ShopNow Logo" width="120" height="auto" /> -->
+
+        <mat-icon>shopping_cart</mat-icon>
+        <span>ShopNow</span>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input class="inputfield" matInput placeholder="Search products" [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()" />
+
+        <button mat-icon-button aria-label="Search" (click)="onSearch()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+
+
+    <!-- Actions -->
+    <div class="actions">
+        <button mat-button (click)="toggleLoginPopup()">Login</button>
+        <button mat-icon-button routerLink="/cart">
+            <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>dialpad</mat-icon>
+                <span>Redial</span>
+            </button>
+            <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
+                <span>Disable alerts</span>
+            </button>
+        </mat-menu>
+    </div>
+</header>

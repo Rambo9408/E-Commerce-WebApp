@@ -5,7 +5,9 @@ const app = new express();
 const connectDB = require('./database/connection');
 const port = 3000;
 const userRoutes = require('./routes/routes');
+const cors = require('cors');
 
+app.use(cors());
 app.use(morgan("tiny"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,6 +17,7 @@ connectDB().catch((err)=>{
 });
 
 app.use('/user',userRoutes);
+app.use('/category',userRoutes);
 
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);

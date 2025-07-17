@@ -6,8 +6,7 @@ const CategorySchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            unique: true, // Prevent duplicate category names
-            lowercase: true, // Store category names in lowercase for consistency
+            unique: true,
         },
     },
     { timestamps: true }

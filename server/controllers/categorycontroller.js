@@ -57,12 +57,12 @@ const deleteCategory = async (req, res) => {
             res.status(404).send({ message: `Cannot Delete with id ${id}. Maybe id is wrong` });
         } else {
             res.send({
-                message: "Employee was deleted successfully!"
+                message: "Category is deleted successfully!"
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Could not delete employee with id=" + id
+            message: "Could not delete Category with id=" + id
         });
     }
 }

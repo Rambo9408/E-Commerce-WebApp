@@ -3,9 +3,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #1976d2;
+    background-color: #6cf4e9;
     /* Azure blue Material base */
-    color: white;
+    color: #060505;
     padding: 10px;
     gap: 20px;
     flex-wrap: wrap;
@@ -21,7 +21,7 @@ input{
     align-items: center;
     font-size: 22px;
     font-weight: 600;
-    color: white;
+    color: #060505;
     gap: 8px;
 }
 
@@ -54,7 +54,7 @@ input{
 .header mat-icon,
 .header .mat-button,
 .header .mat-icon-button {
-    color: white !important;
+    color: #060505 !important;
 }
 
 /* Cart icon size */
@@ -78,13 +78,13 @@ input{
 
 /* Modal box */
 .modal-content {
-    background-color: white;
+    background-color: black;
     padding: 25px 20px;
     border-radius: 10px;
     width: 300px;
     position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: black;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); */
+    color: #060505;
 }
 
 /* Close (×) icon */

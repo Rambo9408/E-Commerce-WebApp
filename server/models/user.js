@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
-            // Note: Never store plain passwords. Hash them before saving!
         },
         isAdmin: {
             type: Boolean,

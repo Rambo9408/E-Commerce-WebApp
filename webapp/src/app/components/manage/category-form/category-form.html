@@ -1,1 +1,15 @@
-<p>category-form works!</p>
+<div class="form-wrapper">
+    <div style="font-size: 22px; margin: 10px 0px 10px 0px;">
+        <strong>{{ route.snapshot.params['id'] ? 'Update Category':'Add New Category'}}</strong>
+    </div>
+    <div class="example-form">
+        <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <input matInput placeholder="e.g. Electronics" name="categoryName"  [(ngModel)]="catData.name"/>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="submit">
+                {{ route.snapshot.params['id'] ? 'Update Category' : 'Add Category' }}
+            </button>
+        </form>
+    </div>
+</div>

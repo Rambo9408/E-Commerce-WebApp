@@ -1,6 +1,9 @@
-<div style="position: fixed; width: 100%;">
+<div class="flex flex-col">
+    <!-- <div style="position: fixed; width: 100%;"> -->
     <app-header></app-header>
-</div>
-<div style="padding-top: 60px;">
-    <router-outlet></router-outlet>
+    <!-- </div> -->
+    <div class="min-h-screen">
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
 </div>

@@ -1,15 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { Login } from '../login/login'; // 👈 Adjust the path as needed
 
 @Component({
   selector: 'app-header',
-  imports: [FormsModule, MatFormFieldModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule, MatInputModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule
+  ],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -17,25 +29,20 @@ export class Header {
   locations = ['Delhi', 'Mumbai', 'Bangalore'];
   selectedLocation = 'Delhi';
   searchQuery = '';
-  showLoginPopup = false;
 
-  loginEmail = '';
-  loginPassword = '';
+  constructor(private dialog: MatDialog) {}
 
-  toggleLoginPopup() {
-    this.showLoginPopup = !this.showLoginPopup;
-  }
-
-  login() {
-    console.log('Login clicked', this.loginEmail, this.loginPassword);
-    // Add your authentication logic here
-    this.toggleLoginPopup();
+  toggleLoginPopup(): void {
+    this.dialog.open(Login, {
+      width: '500px',
+      disableClose: false
+    });
   }
 
   onSearch(): void {
     if (this.searchQuery?.trim()) {
       console.log('Searching for:', this.searchQuery);
-      // Add actual search logic here (API call, filter, navigation, etc.)
+      // Add search API or navigation logic here
     }
   }
 }

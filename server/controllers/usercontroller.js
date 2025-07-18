@@ -1,25 +1,26 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 const create = async (req, res) => {
     try {
-        if (!req.body) {
-            res.status(400).send({ message: "Content can not be empty!" });
-            return;
+        const { name, email, password, isAdmin, contact } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).send({ message: "Name, email, and password are required!" });
         }
 
-        const { name, email, password, isAdmin, contact } = req.body;
+        const hashPassword = await bcrypt.hash(password, 10);
 
         const user = new User({
             name,
             email,
-            password,
+            password: hashPassword,
             isAdmin,
             contact
         });
 
         const data = await user.save();
-        res.status(201).send(data);
-        res.json(user.toObject())
+        res.status(201).json(data);
     } catch (err) {
         res.status(500).send({
             message: err.message || "Some error occurred while creating a user."

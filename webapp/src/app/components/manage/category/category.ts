@@ -11,20 +11,15 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Categoryservice } from '../../../services/categoryservice';
 import { Categoryinterface } from '../../../interfaces/categoryinterface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-category',
-  imports: [FormsModule, CommonModule, MatFormFieldModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [FormsModule, CommonModule, MatFormFieldModule, MatButtonModule, MatMenuModule, MatIconModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, RouterLink],
   templateUrl: './category.html',
   styleUrl: './category.css'
 })
 export class Category {
-
-  // allCategory !: Categoryinterface[];
-  catData: Omit<Categoryinterface, 'id'> = {
-    name: ''
-  };
-
 
   displayedColumns: string[] = ['id', 'name', 'action'];
   dataSource: MatTableDataSource<Categoryinterface>;
@@ -32,7 +27,7 @@ export class Category {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  CategoryService = inject(Categoryservice);// we have to inject the category service for calling apis
+  // CategoryService = inject(Categoryservice);// we have to inject the category service for calling apis
 
   constructor(private category: Categoryservice) {
     this.getCatefories();
@@ -60,33 +55,14 @@ export class Category {
     }
   }
 
-  onSubmit(form: NgForm): void {
-    if (this.catData) {
-      console.log('Category to add:', this.catData);
-
-      this.category.addCategory(this.catData).subscribe((data: Categoryinterface) => {
-        console.log('New Category:', data);
-
-        // Add the new category to the existing dataSource
-        this.dataSource.data = [...this.dataSource.data, data];
-
-        // Reset form
-        form.resetForm();
+  deleteCategory(row: any) {
+    const confirmDelete = confirm(`Are you sure you want to delete "${row._id}"?`);
+    console.log(row.name);
+    if(confirmDelete){
+      this.category.deleteCategory(row._id).subscribe(() => {
+        alert('Category deleted successfully!');
+        this.getCatefories(); // Refresh list
       });
-    }
-  }
-
-
-
-  editCategory(row: Categoryinterface) {
-
-  }
-
-  deleteCategory(row: Categoryinterface) {
-    // Confirm and delete logic here
-    const confirmDelete = confirm(`Are you sure you want to delete "${row.name}"?`);
-    if (confirmDelete) {
-      this.dataSource.data = this.dataSource.data.filter(item => item.id !== row.id);
     }
   }
 

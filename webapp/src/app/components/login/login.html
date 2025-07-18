@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Login to ShopNow</h2>
+
+<mat-dialog-content>
+  <form>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+       <input matInput [(ngModel)]="email" name="email" type="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password" required />
+    </mat-form-field>
+
+    <div style="text-align: right;">
+      <a href="#" class="forgot-link">Forgot password?</a>
+    </div>
+
+    <button mat-raised-button  class="full-width" (click)="onLogin()">Login</button>
+  </form>
+
+  <div class="divider">OR</div>
+
+  <div class="social-buttons">
+    <button mat-stroked-button (click)="onSocialLogin('Google')">
+      <mat-icon>google</mat-icon> Google
+    </button>
+    <button mat-stroked-button (click)="onSocialLogin('Facebook')">
+      <mat-icon>facebook</mat-icon> Facebook
+    </button>
+    <button mat-stroked-button (click)="onSocialLogin('LinkedIn')">
+      <mat-icon>linkedin</mat-icon> LinkedIn
+    </button>
+  </div>
+
+  <div class="signup-link">
+    New to ShopNow? <a href="/register">Create Account</a>
+  </div>
+</mat-dialog-content>

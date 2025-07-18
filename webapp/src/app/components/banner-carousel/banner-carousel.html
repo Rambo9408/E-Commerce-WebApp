@@ -1,0 +1,16 @@
+<div class="banner-carousel">
+    <div class="banner-container" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        <div class="banner" *ngFor="let banner of banners">
+            <img [src]="banner" alt="Banner Image" />
+        </div>
+    </div>
+
+    <button class="nav prev" (click)="prevSlide()">&#8249;</button>
+    <button class="nav next" (click)="nextSlide()">&#8250;</button>
+
+    <div class="dots">
+        <span *ngFor="let banner of banners; let idx = index" [class.active]="idx === currentIndex"
+            (click)="goToSlide(idx)">
+        </span>
+    </div>
+</div>

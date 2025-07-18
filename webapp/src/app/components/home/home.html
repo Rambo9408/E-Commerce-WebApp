@@ -1,1 +1,54 @@
-<p>home works!</p>
+<div class="category-bar">
+    <div class="category">
+        <img src="grocery.webp" alt="Grocery">
+        <span>Grocery</span>
+    </div>
+    <div class="category">
+        <img src="mobiles.webp" alt="Mobiles">
+        <span>Mobiles</span>
+    </div>
+    <div class="category">
+        <img src="fashion.webp" alt="Fashion">
+        <span>Fashion ▼</span>
+    </div>
+    <div class="category">
+        <img src="electronics.webp" alt="Electronics">
+        <span>Electronics ▼</span>
+    </div>
+    <div class="category">
+        <img src="furniture.webp" alt="Home & Furniture">
+        <span>Home & Furniture ▼</span>
+    </div>
+    <div class="category">
+        <img src="appliances.webp" alt="Appliances">
+        <span>Appliances</span>
+    </div>
+    <div class="category">
+        <img src="flights.webp" alt="Flight Bookings">
+        <span>Flight Bookings</span>
+    </div>
+    <div class="category">
+        <img src="toys.webp" alt="Toys">
+        <span>Beauty, Toys & More ▼</span>
+    </div>
+    <div class="category">
+        <img src="bike.webp" alt="Two Wheelers">
+        <span>Two Wheelers ▼</span>
+    </div>
+</div>
+<div>
+    <app-banner-carousel></app-banner-carousel>
+</div>
+<div>
+    <div class="product-grid">
+        <div class="product-card" *ngFor="let product of products">
+            <img [src]="product.image" alt="{{ product.name }}" />
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p class="price">₹{{ product.price }}</p>
+                <button (click)="addToCart(product)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+</div>

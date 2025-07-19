@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Login } from '../login/login'; // 👈 Adjust the path as needed
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,8 @@ import { Login } from '../login/login'; // 👈 Adjust the path as needed
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterLink
   ],
   templateUrl: './header.html',
   styleUrl: './header.css'

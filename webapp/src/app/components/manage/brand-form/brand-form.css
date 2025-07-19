@@ -1,0 +1,91 @@
+/* Container */
+div {
+  width: 100%;
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  color: #3f51b5;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Form layout */
+form div {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.15);
+}
+
+/* Submit Button */
+button[type="submit"] {
+  padding: 10px 16px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #303f9f;
+}
+
+.brand-form-container {
+  position: relative;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 500px;
+  margin: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-button:hover {
+  color: #f44336;
+}

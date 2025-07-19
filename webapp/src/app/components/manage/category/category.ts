@@ -15,7 +15,20 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-category',
-  imports: [FormsModule, CommonModule, MatFormFieldModule, MatButtonModule, MatMenuModule, MatIconModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, RouterLink],
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    RouterLink
+  ],
   templateUrl: './category.html',
   styleUrl: './category.css'
 })
@@ -58,7 +71,7 @@ export class Category {
   deleteCategory(row: any) {
     const confirmDelete = confirm(`Are you sure you want to delete "${row._id}"?`);
     console.log(row.name);
-    if(confirmDelete){
+    if (confirmDelete) {
       this.category.deleteCategory(row._id).subscribe(() => {
         alert('Category deleted successfully!');
         this.getCatefories(); // Refresh list

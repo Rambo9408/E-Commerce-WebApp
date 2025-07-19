@@ -9,6 +9,6 @@ router.get('/Employee/:id', UserController.find);
 router.post('/addEmployee', UserController.create);
 router.post('/login', AuthController.login);
 router.put('/updateEmployee/:id', UserController.update);
-router.post('/addMultipleEmployees', UserController.addMultipleEmployees);
+router.post('/addMultipleEmployees', UserController.addMultipleEmployees);// only used to add employees through api
 
 module.exports = router;

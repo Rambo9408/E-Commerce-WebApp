@@ -41,17 +41,17 @@ const update = async (req, res) => {
         });
 
         if (!data) {
-            return res.status(404).send({ message: `Cannot update employee with ID ${id}. Maybe employee not found!` });
+            return res.status(404).send({ message: `Cannot update product with ID ${id}. Maybe product not found!` });
         }
 
         res.status(200).send(data);
 
     } catch (err) {
-        res.status(500).send({ message: err.message || "Error updating employee information" });
+        res.status(500).send({ message: err.message || "Error updating product information" });
     }
 };
 
-const deleteEmployee = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         console.log("req Data: ", req.params.id);
 
@@ -61,17 +61,17 @@ const deleteEmployee = async (req, res) => {
             res.status(404).send({ message: `Cannot Delete with id ${id}. Maybe id is wrong` });
         } else {
             res.send({
-                message: "Employee was deleted successfully!"
+                message: "Product was deleted successfully!"
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Could not delete employee with id=" + id
+            message: "Could not delete product with id=" + id
         });
     }
 }
 
-const addMultipleEmployees = async (req, res) => {
+const addMultipleProductss = async (req, res) => {
     try {
         const Products = req.body;
         if (!Array.isArray(Products) || Products.length === 0) {
@@ -98,7 +98,7 @@ const find = async (req, res) => {
         if(id){
             const getEmployee = await Product.findById(id);
             if (!getEmployee) {
-                res.status(404).send({ message: "Not found employee with id " + id });
+                res.status(404).send({ message: "Not found product with id " + id });
             } else {
                 res.send(getEmployee);
             }
@@ -107,8 +107,8 @@ const find = async (req, res) => {
             res.send(allEmployees);
         }
     } catch (err) {
-        res.status(500).send({ message: err.message || "Error Occurred while retrieving employee information" });
+        res.status(500).send({ message: err.message || "Error Occurred while retrieving product information" });
     }
 }
 
-module.exports = { create, update, deleteEmployee, addMultipleEmployees, find};
+module.exports = { create, update, deleteProduct, addMultipleProductss, find};

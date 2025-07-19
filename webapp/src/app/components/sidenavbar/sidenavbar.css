@@ -1,0 +1,16 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+mat-sidenav {
+  width: 250px;
+  background: #fafafa;
+}
+
+.nav-text {
+  margin-left: 10px;
+}
+
+mat-list-item {
+  font-size: 16px;
+}

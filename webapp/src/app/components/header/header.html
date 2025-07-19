@@ -19,6 +19,7 @@
 
     <!-- Actions -->
     <div class="actions">
+        @if(!router.url.includes('/admin') ){
         <button mat-button (click)="toggleLoginPopup()">Login</button>
         <button mat-icon-button routerLink="/cart">
             <mat-icon>shopping_cart</mat-icon>
@@ -40,5 +41,26 @@
                 <span>Disable alerts</span>
             </button>
         </mat-menu>
+        }
+        @else {
+        <!-- Profile Icon with Menu Trigger -->
+        <mat-icon class="avatar-icon" [matMenuTriggerFor]="profileMenu">person</mat-icon>
+
+        <!-- Dropdown Menu -->
+        <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Your Account</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>list</mat-icon>
+                <span>Your Lists</span>
+            </button>
+            <button mat-menu-item (click)="signOut()">
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+            </button>
+        </mat-menu>
+        }
     </div>
 </header>

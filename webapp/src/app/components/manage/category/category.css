@@ -39,3 +39,15 @@ mat-header-cell {
     background: white;
     z-index: 100;
 }
+
+.full-width-table {
+  width: 100%;
+}
+
+.tablecontainer {
+  padding: 20px;
+}
+
+.example-form {
+  margin-bottom: 15px;
+}

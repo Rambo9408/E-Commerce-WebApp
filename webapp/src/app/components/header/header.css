@@ -11,7 +11,7 @@
     flex-wrap: wrap;
 }
 
-input{
+input {
     color: black;
 }
 
@@ -110,4 +110,27 @@ input{
     .actions {
         justify-content: center;
     }
+}
+
+.avatar-icon {
+    font-size: 30px;
+    /* Icon size */
+    color: #ffffff;
+    /* Icon color (white) */
+    background-color: #3b82f680;
+    /* Circle background (adjust hue) */
+    width: 30px;
+    /* Container width */
+    height: 30px;
+    /* Container height */
+    line-height: 30px;
+    /* Vertical centering */
+    border-radius: 50%;
+    /* Make it circular */
+    text-align: center;
+    /* Horizontal centering */
+    display: inline-block;
+    /* Allow width/height to apply */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Optional soft shadow */
 }

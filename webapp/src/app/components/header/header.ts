@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Login } from '../login/login'; // 👈 Adjust the path as needed
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +32,7 @@ export class Header {
   selectedLocation = 'Delhi';
   searchQuery = '';
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, public router: Router) { }
 
   toggleLoginPopup(): void {
     this.dialog.open(Login, {
@@ -46,5 +46,10 @@ export class Header {
       console.log('Searching for:', this.searchQuery);
       // Add search API or navigation logic here
     }
+  }
+
+  signOut() {
+    console.log("Signing out...");
+    // Add sign-out logic here
   }
 }

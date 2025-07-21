@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
 
-      <a mat-list-item routerLink="/dashboard">
+      <a mat-list-item [routerLink]="router.url.includes('/admin') ? '/admin' : '/employee'">
         <mat-icon>dashboard</mat-icon>
         <span class="nav-text">Dashboard</span>
       </a>

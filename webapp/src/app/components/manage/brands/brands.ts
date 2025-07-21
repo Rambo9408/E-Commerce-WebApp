@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Brandinterface } from '../../../interfaces/brandinterface';
+import { Brandservice } from '../../../services/brandservice';
 
 @Component({
   selector: 'app-brands',
@@ -20,13 +22,14 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class Brands implements AfterViewInit {
   displayedColumns: string[] = ['index', 'name', 'image', 'action'];
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<Brandinterface>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(private http: HttpClient, private dialog: MatDialog, private brandservice: Brandservice) {
     this.loadBrands();
+    this.dataSource = new MatTableDataSource<Brandinterface>([]);
   }
 
   toggleAddBrandPopup(): void {
@@ -48,7 +51,8 @@ export class Brands implements AfterViewInit {
   }
 
   loadBrands(): void {
-    this.http.get<any[]>('http://localhost:3000/brand/allbrands').subscribe((data) => {
+    // this.http.get<any[]>('http://localhost:3000/brand/allbrands').subscribe((data) => {
+    this.brandservice.getBrands().subscribe((data) => {
       const updatedData = data.map(brand => ({
         ...brand,
         imageUrl: `http://localhost:3000${brand.image}`
@@ -63,24 +67,36 @@ export class Brands implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  editBrand(row: any) {
-    this.http.get<any>(`http://localhost:3000/brand/getbrand/${row._id}`).subscribe((brandData) => {
-      const dialogRef = this.dialog.open(BrandForm, {
-        width: '500px',
-        disableClose: false,
-        data: brandData   // pass the brand data to the dialog
-      });
+  editBrand(row: Brandinterface) {
+    // this.http.get<Brandinterface>(`http://localhost:3000/brand/getbrand/${row._id}`).subscribe((brandData) => {
+    //   const dialogRef = this.dialog.open(BrandForm, {
+    //     width: '500px',
+    //     disableClose: false,
+    //     data: brandData 
+    //   });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === 'refresh') {
-          this.loadBrands();
-        }
-      });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result === 'refresh') {
+    //       this.loadBrands();
+    //     }
+    //   });
+    // });
+
+    const dialogRef = this.dialog.open(BrandForm, {
+      width: '500px',
+      disableClose: false,
+      data: { id: row._id }  // send only ID
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'refresh') {
+        this.loadBrands();
+      }
     });
   }
 
 
-  deleteBrand(row: any) {
+  deleteBrand(row: Brandinterface) {
     // Confirm and delete
     this.http.delete(`http://localhost:3000/brand/deleteBrand/${row._id}`).subscribe(() => {
       this.loadBrands();

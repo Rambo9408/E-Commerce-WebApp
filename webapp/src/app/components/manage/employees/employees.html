@@ -1,5 +1,5 @@
 <!-- Wrapper -->
-<div>
+<div class="form-wrapper">
     <!-- Page Heading -->
      <div style="font-size: 22px;text-align: center; margin: 10px 0px 10px 0px;">
          <strong class="page-heading">Employee Management</strong>
@@ -7,10 +7,10 @@
 
     <!-- Header Actions -->
     <div class="header-actions">
-        <button mat-raised-button color="primary">Add New Employee</button>
+        <button mat-raised-button color="primary" (click)="toggleAddEmployeePopup()">Add New Employee</button>
     </div>
 </div>
-<div >
+<div class="tablecontainer">
     <!-- Employee Table -->
     <mat-form-field appearance="fill" class="full-width">
         <mat-label>Filter</mat-label>

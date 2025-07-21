@@ -1,0 +1,60 @@
+<div style="font-size: 22px; margin: 10px 0px;">
+  <strong>{{ isEdit ? 'Update Product' : 'Add New Product' }}</strong>
+</div>
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Product Name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Short Description</mat-label>
+    <input matInput formControlName="shortDescription" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Full Description</mat-label>
+    <textarea matInput formControlName="description" rows="4"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" formControlName="price" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Discount (%)</mat-label>
+    <input matInput type="number" formControlName="discount" />
+  </mat-form-field>
+
+  <div class="form-group">
+    <label>Upload Product Images (multiple):</label>
+    <input type="file" multiple (change)="onImageSelect($event)" />
+  </div>
+
+  <mat-form-field appearance="fill" *ngIf="categories">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="categoryId">
+      <mat-option *ngFor="let category of categories" [value]="category._id">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="brands">
+    <mat-label>Brand</mat-label>
+    <mat-select formControlName="brandId">
+      <mat-option *ngFor="let brand of brands" [value]="brand._id">
+        {{ brand.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <div class="button-group">
+    <button mat-raised-button type="submit" color="primary">Submit</button>
+    <button mat-raised-button type="button" color="warn" (click)="this.dialogRef.close()">Cancel</button>
+  </div>
+</form>

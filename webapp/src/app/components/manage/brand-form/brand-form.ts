@@ -4,6 +4,9 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
+import { Brandservice } from '../../../services/brandservice';
+import { Brandinterface } from '../../../interfaces/brandinterface';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-brand-form',
@@ -12,15 +15,31 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './brand-form.css'
 })
 export class BrandForm {
-  brand = { name: '' };
+  brand: Omit<Brandinterface, 'id'> = {
+    name: ''
+  };
+
   file!: File;
 
-  constructor(private http: HttpClient, public dialogRef: MatDialogRef<BrandForm>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private http: HttpClient,
+    public dialogRef: MatDialogRef<BrandForm>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private brandservice: Brandservice,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    if (this.data) {
-      this.brand.name = this.data.name;
-      // Don't prefill file input (browsers don't allow setting file input programmatically)
+    if (this.data?.id) {
+      this.brandservice.getBrandById(this.data.id).subscribe((brandData) => {
+        this.brand = {
+          name: brandData.name
+        };
+        this.cdr.detectChanges(); // << ✅ triggers change detection safely
+        //Angular throws ExpressionChangedAfterItHasBeenCheckedError because it first renders the template with brand.name = '', 
+        //then after the component is initialized, brand.name is updated from your API.
+        //That breaks Angular's assumption that nothing should change after the first check.
+      });
     }
   }
 

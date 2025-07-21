@@ -3,6 +3,7 @@ export interface Employeeinterface {
     name: string;
     email: string;
     contact: string;
+    password?:string;
     department: string;
     dateOfJoining: Date | string;       // Date of Joining
     task: string[];          // Array of assigned tasks

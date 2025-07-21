@@ -18,24 +18,29 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
-        costPrice: {
+        price: {
             type: Number,
             required: true,
             min: 0,
         },
-        sellingPrice: {
+        discount: {
             type: Number,
             min: 0,
         },
         images: {
-            type: [String], // array of image URLs or paths
+            type: [String],
             default: [],
         },
         categoryId: {
-            type: mongoose.Schema.Types.ObjectId, //categoryId is an ObjectId that references a document in the Category collection.
-            ref: "Category", // assumes you have a Category model
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Category",
             required: false,
         },
+        brandId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Brand",
+            required: false
+        }
     },
     { timestamps: true }
 );

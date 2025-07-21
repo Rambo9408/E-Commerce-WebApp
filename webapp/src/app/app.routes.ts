@@ -55,6 +55,16 @@ export const routes: Routes = [
         path: 'category/:id',
         loadComponent: () =>
           import('./components/manage/category-form/category-form').then((c) => c.CategoryForm)
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./components/manage/product/product').then((c) => c.Product)
+      },
+       {
+        path: 'products/add',
+        loadComponent: () =>
+          import('./components/manage/product-form/product-form').then((c) => c.ProductForm)
       }
     ]
   },

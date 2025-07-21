@@ -1,20 +1,23 @@
 /* Main container */
 .tablecontainer {
-  margin: 20px 40px; /* creates left/right spacing from sidebar and edge */
-  padding: 24px;
+  max-height: 500px;
+  margin: 20px 20px;
+  padding: 10px;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow-x: auto; /* prevents overflow on small screens */
+  overflow-y: auto;
 }
 
 /* Header section with title and button */
 .header-actions {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+  padding-right: 20px;
+  text-align: right;
 }
 
 /* Page heading */
@@ -110,7 +113,8 @@ img {
     align-self: flex-end;
   }
 
-  mat-header-cell, mat-cell {
+  mat-header-cell,
+  mat-cell {
     padding: 10px 12px;
     font-size: 14px;
   }

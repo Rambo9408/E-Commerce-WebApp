@@ -1,55 +1,73 @@
 <div class="product-container" *ngIf="product">
-    <!-- Left: Image Gallery -->
+    <!-- Main Image Gallery -->
     <div class="product-images">
         <div class="thumbs">
-            <img *ngFor="let img of imageList" [src]="imageBaseUrl + img" alt="Thumb"
+            <img *ngFor="let img of imageList; let i = index" [src]="imageBaseUrl + img" alt="Thumb"
                 [class.selected-thumb]="mainImage === imageBaseUrl + img" (click)="mainImage = imageBaseUrl + img" />
         </div>
         <img [src]="mainImage" alt="Main" class="main-img" />
     </div>
 
+    <!-- 👇 Edit Images Section -->
+    <div class="edit-images-section">
+        <h4>Edit Images</h4>
+
+        <!-- Existing Images with Delete -->
+        <div *ngFor="let img of imageList; let i = index" class="image-item">
+            <img [src]="imageBaseUrl + img" alt="Product Image" width="100" />
+            <button (click)="deleteImage(i)">Delete</button>
+        </div>
+
+        <!-- Add New Images -->
+        <input type="file" style="width: 241px;" multiple (change)="handleImageUpload($event)" />
+    </div>
+
+
     <!-- Right: Product Details -->
     <div class="product-details">
-        <h2>{{ product.brandId.name }}</h2>
-        <h3>Category: {{ product.categoryId.name }}</h3>
-        <h1 contenteditable="true">{{ product.name }}</h1>
+        <div class="form-group">
+            <label class="name" for="brand"><strong>Brand Name: </strong></label>
+            <input type="text" id="brand" name="brand" [(ngModel)]="product.brandId.name" placeholder="Brand" />
+        </div>
+
+        <div class="form-group">
+            <label class="name" for="category"><strong>Category Name: </strong></label>
+            <input type="text" id="category" name="category" [(ngModel)]="product.categoryId.name"
+                placeholder="Category" />
+        </div>
+
+        <div class="form-group">
+            <label class="name" for="productName"><strong>Product Name: </strong></label>
+            <input type="text" id="productName" name="productName" [(ngModel)]="product.name"
+                placeholder="Product Name" />
+        </div>
+
 
         <div class="price">
-            <span class="current">₹{{ product.price }}</span>
-            <span class="discount">{{ product.discount }}% off</span>
+            <label>Price: ₹</label>
+            <input type="number" [(ngModel)]="product.price" placeholder="Enter price" />
         </div>
 
-        <div class="rating">
-            <span>{{ product.rating }} ★</span>
-            <span>{{ product.reviews }} reviews</span>
+        <div class="price">
+            <label>Discount (%): </label>
+            <input type="number" [(ngModel)]="product.discount" placeholder="Enter discount %" />
         </div>
 
-        <div class="size-frame">
-            <label>Size:</label>
-            <button *ngFor="let size of product.sizes" [class.active]="size === selectedSize"
-                (click)="selectedSize = size">
-                {{ size }}
-            </button>
-        </div>
-
-        <div class="frame-color">
-            <label>Frame Color:</label>
-            <button *ngFor="let color of product.frameColors" [class.active]="color === selectedColor"
-                (click)="selectedColor = color">
-                {{ color }}
-            </button>
-        </div>
 
         <div class="offers">
             <h3>Available Offers</h3>
             <ul>
-                <li *ngFor="let offer of product.offers">{{ offer }}</li>
+                <li *ngFor="let offer of product.offerId; let i = index">
+                    <input type="text" [(ngModel)]="offer.description" placeholder="Offer {{ i + 1 }}" />
+                </li>
             </ul>
+
+            <button type="button" (click)="addOffer()">+ Add Offer</button>
         </div>
 
+
         <div class="action-buttons">
-            <button class="add-to-cart">Add to Cart</button>
-            <button class="buy-now">Buy Now</button>
+            <button type="submit" class="add-to-cart">Update</button>
         </div>
     </div>
 </div>

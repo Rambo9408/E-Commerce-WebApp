@@ -53,6 +53,7 @@ export class ProductForm implements OnInit {
       _id: '',
       name: ''
     },
+    offerId:[],
     images: [''],
   }
   selectedImages: File[] = [];
@@ -78,7 +79,8 @@ export class ProductForm implements OnInit {
       discount: ['', [Validators.min(0)]],
       images: [null], // for uploaded file handling
       categoryId: ['', Validators.required],
-      brandId: ['', Validators.required]
+      brandId: ['', Validators.required],
+      offerId:['', Validators.required]
     });
 
     // If fetching from backend:

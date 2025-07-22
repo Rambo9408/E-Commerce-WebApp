@@ -149,3 +149,7 @@ button.active {
   border-radius: 4px;
   font-weight: bold;
 }
+.edit-images-section{
+  overflow-y: auto;
+  max-height: 500px;
+}

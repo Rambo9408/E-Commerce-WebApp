@@ -7,6 +7,7 @@ export interface Productinterface {
     discount: number;
     categoryId: { _id: string; name: string };
     brandId: { _id: string; name: string };
+     offerId: { _id?: string; description: string }[];
     images?: File | string[];
     rating?: number;
     reviews?: number;

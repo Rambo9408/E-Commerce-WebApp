@@ -118,7 +118,11 @@ const find = async (req, res) => {
         if (id) {
             const product = await Product.findById(id)
                 .populate("brandId", "name")        // populate only the `name` field
-                .populate("categoryId", "name");     // same here
+                .populate("categoryId", "name")     // same here
+                .populate({
+                    path: "offerId",
+                    select: ["description","ProductID"],
+                });
 
             if (!product) {
                 return res.status(404).send({ message: `No product found with ID ${id}` });
@@ -129,7 +133,11 @@ const find = async (req, res) => {
 
         const allProducts = await Product.find()
             .populate("brandId", "name")
-            .populate("categoryId", "name");
+            .populate("categoryId", "name")
+            .populate({
+                path: "offerId",
+                select: ["description","ProductID"],
+            });
 
         res.status(200).json(allProducts);
     } catch (err) {

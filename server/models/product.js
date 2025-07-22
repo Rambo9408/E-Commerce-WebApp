@@ -36,11 +36,12 @@ const ProductSchema = new mongoose.Schema(
             ref: "Category",
             required: false,
         },
-        brandId:{
+        brandId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Brand",
             required: false
-        }
+        },
+        offerId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Offer" }]
     },
     { timestamps: true }
 );

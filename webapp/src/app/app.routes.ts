@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { Header } from './components/header/header';
 import { Adminlayout } from './components/layout/adminlayout/adminlayout';
+import { Employeelayout } from './components/layout/employeelayout/employeelayout';
+import { Customerlayout } from './components/layout/customerlayout/customerlayout';
+import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -15,11 +18,18 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: Adminlayout,
+    canActivateChild: [AuthGuard],
+    data: { role: 'admin' },
     children: [
       {
         path: '',
         loadComponent: () =>
           import('./components/dashboard/admindashboard/admindashboard').then((c) => c.Admindashboard)
+      },
+      {
+        path: 'productDetails/:id',
+        loadComponent: () =>
+          import('./components/manage/productdetails/productdetails').then((c) => c.Productdetails)
       },
       {
         path: 'brands',
@@ -61,7 +71,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./components/manage/product/product').then((c) => c.Product)
       },
-       {
+      {
         path: 'products/add',
         loadComponent: () =>
           import('./components/manage/product-form/product-form').then((c) => c.ProductForm)
@@ -70,7 +80,29 @@ export const routes: Routes = [
   },
   {
     path: 'employee',
-    loadComponent: () =>
-      import('./components/dashboard/employeedashboard/employeedashboard').then((c) => c.Employeedashboard)
-  }
+    component: Employeelayout,
+    canActivateChild: [AuthGuard],
+    data: { role: 'employee' },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/dashboard/employeedashboard/employeedashboard').then((c) => c.Employeedashboard)
+      }
+    ]
+  },
+   {
+    path: 'customer',
+    component: Customerlayout,
+    canActivateChild: [AuthGuard],
+    data: { role: 'customer' },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/dashboard/customerdashboard/customerdashboard').then((c) => c.Customerdashboard)
+      }
+    ]
+  },
+  { path: '**', redirectTo: '' }
 ];

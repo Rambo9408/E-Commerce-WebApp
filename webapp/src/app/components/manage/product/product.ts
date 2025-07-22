@@ -12,10 +12,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Productinterface } from '../../../interfaces/productinterface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProductForm } from '../product-form/product-form';
-import { Categoryinterface } from '../../../interfaces/categoryinterface';
-import { Brandinterface } from '../../../interfaces/brandinterface';
-import { Categoryservice } from '../../../services/categoryservice';
-import { Brandservice } from '../../../services/brandservice';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -30,6 +27,7 @@ import { Brandservice } from '../../../services/brandservice';
     MatPaginatorModule,
     MatTableModule,
     MatInputModule,
+    RouterLink
   ],
   templateUrl: './product.html',
   styleUrl: './product.css'
@@ -110,7 +108,12 @@ export class Product {
     // });
   }
   deleteProduct(row: any) {
-
+    this.productservice.deleteProduct(row._id).subscribe((res)=>{
+      if(res){
+        alert("Product Deleted");
+        this.loadProducts();
+      }
+    })
   }
 
 }

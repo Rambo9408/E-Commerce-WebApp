@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,10 +28,10 @@ export class Login {
   email = '';
   password = '';
 
-  constructor(private http: HttpClient, public dialogRef: MatDialogRef<Login>) { }
+  constructor(private http: HttpClient, public dialogRef: MatDialogRef<Login>, private router: Router) { }
 
   onLogin() {
-    console.log('Login with', this.email, this.password);
+    // console.log('Login with', this.email, this.password);
     const loginData = {
       email: this.email,
       password: this.password
@@ -41,8 +42,14 @@ export class Login {
         console.log('Login successful', response);
         // You can store the token in localStorage or a service
         localStorage.setItem('token', response.token);
-        localStorage.setItem('isAdmin', response.user.isAdmin);
+        localStorage.setItem('role', response.user.role);
+        localStorage.setItem('isAdmin', response.user.role === 'admin' ? 'true' : 'false');
         this.dialogRef.close();
+        if (response.user.role === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/employee']);
+        }
       },
       error: (err) => {
         console.error('Login failed', err);

@@ -1,0 +1,55 @@
+<div class="product-container" *ngIf="product">
+    <!-- Left: Image Gallery -->
+    <div class="product-images">
+        <div class="thumbs">
+            <img *ngFor="let img of imageList" [src]="imageBaseUrl + img" alt="Thumb"
+                [class.selected-thumb]="mainImage === imageBaseUrl + img" (click)="mainImage = imageBaseUrl + img" />
+        </div>
+        <img [src]="mainImage" alt="Main" class="main-img" />
+    </div>
+
+    <!-- Right: Product Details -->
+    <div class="product-details">
+        <h2>{{ product.brandId.name }}</h2>
+        <h3>Category: {{ product.categoryId.name }}</h3>
+        <h1 contenteditable="true">{{ product.name }}</h1>
+
+        <div class="price">
+            <span class="current">₹{{ product.price }}</span>
+            <span class="discount">{{ product.discount }}% off</span>
+        </div>
+
+        <div class="rating">
+            <span>{{ product.rating }} ★</span>
+            <span>{{ product.reviews }} reviews</span>
+        </div>
+
+        <div class="size-frame">
+            <label>Size:</label>
+            <button *ngFor="let size of product.sizes" [class.active]="size === selectedSize"
+                (click)="selectedSize = size">
+                {{ size }}
+            </button>
+        </div>
+
+        <div class="frame-color">
+            <label>Frame Color:</label>
+            <button *ngFor="let color of product.frameColors" [class.active]="color === selectedColor"
+                (click)="selectedColor = color">
+                {{ color }}
+            </button>
+        </div>
+
+        <div class="offers">
+            <h3>Available Offers</h3>
+            <ul>
+                <li *ngFor="let offer of product.offers">{{ offer }}</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <button class="add-to-cart">Add to Cart</button>
+            <button class="buy-now">Buy Now</button>
+        </div>
+    </div>
+</div>

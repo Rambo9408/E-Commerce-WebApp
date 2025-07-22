@@ -16,10 +16,14 @@ import { CommonModule } from '@angular/common';
 export class App {
   protected title = 'webapp';
   isAdminRoute = false;
+  isEmployeeRoute = false;
+  isCustomerRoute = false;
 
   constructor(private router: Router) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: any) => {
       this.isAdminRoute = event.urlAfterRedirects.startsWith('/admin');
+      this.isEmployeeRoute = event.urlAfterRedirects.startsWith('/employee');
+      this.isCustomerRoute = event.urlAfterRedirects.startsWith('/user');
     });
   }
 }

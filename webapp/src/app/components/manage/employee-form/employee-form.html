@@ -54,6 +54,6 @@
             </mat-form-field>
         </ng-container>
 
-        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="userForm.invalid" type="submit">Submit</button>
     </form>
 </div>

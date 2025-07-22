@@ -28,7 +28,7 @@ const login = async (req, res) => {
 
         // Step 3: Generate JWT token
         const token = jwt.sign(
-            { id: user._id, email: user.email, isAdmin: user.isAdmin },
+            { id: user._id, email: user.email, isAdmin: user.role === 'admin' },
             JWT_SECRET,
             { expiresIn: '2h' }
         );
@@ -50,4 +50,29 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { login };
+ const getCurrentEmployee = async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+console.log(authHeader);
+
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const employee = await User.findById(decoded.id);
+
+        if (!employee) {
+            return res.status(404).json({ error: 'Employee not found' });
+        }
+
+        res.json(employee);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+module.exports = { login, getCurrentEmployee };

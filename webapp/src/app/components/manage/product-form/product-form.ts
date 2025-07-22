@@ -45,8 +45,14 @@ export class ProductForm implements OnInit {
     description: '',
     price: 0,
     discount: 0,
-    categoryId: '',
-    brandId: '',
+    categoryId: {
+      _id: '',
+      name: ''
+    },
+    brandId: {
+      _id: '',
+      name: ''
+    },
     images: [''],
   }
   selectedImages: File[] = [];
@@ -105,7 +111,7 @@ export class ProductForm implements OnInit {
       formData.append('categoryId', productData.categoryId);
       formData.append('brandId', productData.brandId);
       formData.append('uploadType', 'products');
-      
+
       this.selectedImages.forEach((file) => {
         formData.append('images', file);
       });

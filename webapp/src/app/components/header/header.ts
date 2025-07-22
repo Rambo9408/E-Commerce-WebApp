@@ -49,7 +49,9 @@ export class Header {
   }
 
   signOut() {
-    console.log("Signing out...");
-    // Add sign-out logic here
+    // console.log("Signing out...");
+    localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
+    this.router.navigate(['/']);
   }
 }

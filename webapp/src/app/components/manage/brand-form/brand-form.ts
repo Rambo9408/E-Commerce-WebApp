@@ -35,7 +35,7 @@ export class BrandForm {
         this.brand = {
           name: brandData.name
         };
-        this.cdr.detectChanges(); // << ✅ triggers change detection safely
+        this.cdr.detectChanges(); // Triggers change detection safely
         //Angular throws ExpressionChangedAfterItHasBeenCheckedError because it first renders the template with brand.name = '', 
         //then after the component is initialized, brand.name is updated from your API.
         //That breaks Angular's assumption that nothing should change after the first check.
@@ -51,10 +51,16 @@ export class BrandForm {
   submitForm() {
     const formData = new FormData();
     formData.append('name', this.brand.name);
+    formData.append('uploadType', "brands");
+
     if (this.file) {
       formData.append('image', this.file);  // Only add if new file selected
-      formData.append('uploadType',"brands"); 
     }
+
+    formData.forEach((value, key) => {
+      console.log(key + ':', value);
+    });
+
     const url = this.data?._id
       ? `http://localhost:3000/brand/updatebrand/${this.data._id}`
       : 'http://localhost:3000/brand/addbrand';

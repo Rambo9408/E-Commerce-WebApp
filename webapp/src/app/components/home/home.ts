@@ -3,6 +3,7 @@ import { BannerCarousel } from '../banner-carousel/banner-carousel';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+type CategoryKey = 'fashion' | 'electronics' | 'furniture' | 'toys' | 'bikes';
 @Component({
   selector: 'app-home',
   imports: [FormsModule, BannerCarousel, CommonModule],
@@ -42,6 +43,19 @@ export class Home {
       image: 'https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/o/h/m/-original-imah4jywmcz5ysz3.jpeg?q=70'
     }
   ];
+
+  // ✅ Use correct object syntax with type
+  dropdowns: Record<CategoryKey, boolean> = {
+    fashion: false,
+    electronics: false,
+    furniture: false,
+    toys: false,
+    bikes: false,
+  };
+
+  toggleDropdown(key: CategoryKey) {
+    this.dropdowns[key] = !this.dropdowns[key];
+  }
 
   addToCart(product: any) {
     console.log('Adding to cart:', product);

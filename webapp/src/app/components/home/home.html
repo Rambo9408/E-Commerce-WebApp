@@ -7,13 +7,23 @@
         <img src="mobiles.webp" alt="Mobiles">
         <span>Mobiles</span>
     </div>
-    <div class="category">
+    <div class="category" (click)="toggleDropdown('fashion')">
         <img src="fashion.webp" alt="Fashion">
         <span>Fashion ▼</span>
+        <ul class="dropdown" *ngIf="dropdowns.fashion">
+            <li>Men</li>
+            <li>Women</li>
+            <li>Kids</li>
+        </ul>
     </div>
-    <div class="category">
+    <div class="category" (click)="toggleDropdown('electronics')">
         <img src="electronics.webp" alt="Electronics">
         <span>Electronics ▼</span>
+        <ul class="dropdown" *ngIf="dropdowns.electronics">
+            <li>Mobiles</li>
+            <li>Laptops</li>
+            <li>TVs</li>
+        </ul>
     </div>
     <div class="category">
         <img src="furniture.webp" alt="Home & Furniture">
@@ -36,7 +46,7 @@
         <span>Two Wheelers ▼</span>
     </div>
 </div>
-<div>
+<div class="banner">
     <app-banner-carousel></app-banner-carousel>
 </div>
 <div>

@@ -53,7 +53,7 @@ export class ProductForm implements OnInit {
       _id: '',
       name: ''
     },
-    offerId:[],
+    offerId: [],
     images: [''],
   }
   selectedImages: File[] = [];
@@ -79,8 +79,7 @@ export class ProductForm implements OnInit {
       discount: ['', [Validators.min(0)]],
       images: [null], // for uploaded file handling
       categoryId: ['', Validators.required],
-      brandId: ['', Validators.required],
-      offerId:['', Validators.required]
+      brandId: ['', Validators.required]
     });
 
     // If fetching from backend:
@@ -128,6 +127,9 @@ export class ProductForm implements OnInit {
       this.productservice.addProduct(formData).subscribe(() => {
         this.dialogRef.close('refresh');
       });
+    } else {
+      console.warn("Form is invalid", this.productForm.errors);
+      return;
     }
   }
 

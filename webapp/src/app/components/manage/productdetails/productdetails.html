@@ -58,16 +58,23 @@
             <h3>Available Offers</h3>
             <ul>
                 <li *ngFor="let offer of product.offerId; let i = index">
-                    <input type="text" [(ngModel)]="offer.description" placeholder="Offer {{ i + 1 }}" />
+                    <input type="text" [(ngModel)]="offer.description" (ngModelChange)="offer.edited = true"
+                        placeholder="Offer {{ i + 1 }}" />
+                    <a *ngIf="offer.edited" (click)="updateOffer(i)"
+                        style="margin-left: 5px; color: blue; cursor: pointer;">
+                        Edit
+                    </a>
                 </li>
             </ul>
+            <div class="add-offer">
+                <input type="text" [(ngModel)]="newOffer" placeholder="Enter new offer" name="newOffer" />
 
-            <button type="button" (click)="addOffer()">+ Add Offer</button>
-        </div>
+                <button type="button" (click)="addOffer()">+ Add Offer</button>
+            </div>
 
 
-        <div class="action-buttons">
-            <button type="submit" class="add-to-cart">Update</button>
+            <div class="action-buttons">
+                <button type="submit" class="add-to-cart">Update</button>
+            </div>
         </div>
     </div>
-</div>

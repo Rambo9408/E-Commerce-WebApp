@@ -75,3 +75,7 @@ button {
   color: white;
   border-radius: 8px;
 }
+
+.full-width{
+  width: 100%;
+}

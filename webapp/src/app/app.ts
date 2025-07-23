@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
-import { filter } from 'rxjs/operators';
+import { RouterService } from './services/routeservice';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -19,11 +19,5 @@ export class App {
   isEmployeeRoute = false;
   isCustomerRoute = false;
 
-  constructor(private router: Router) {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: any) => {
-      this.isAdminRoute = event.urlAfterRedirects.startsWith('/admin');
-      this.isEmployeeRoute = event.urlAfterRedirects.startsWith('/employee');
-      this.isCustomerRoute = event.urlAfterRedirects.startsWith('/user');
-    });
-  }
+  constructor(public routerService : RouterService) {  }
 }

@@ -69,11 +69,11 @@ export class Category {
   }
 
   deleteCategory(row: any) {
-    const confirmDelete = confirm(`Are you sure you want to delete "${row._id}"?`);
+    const confirmDelete = confirm(`Are you sure you want to delete "${row.name}"?`);
     console.log(row.name);
     if (confirmDelete) {
       this.category.deleteCategory(row._id).subscribe(() => {
-        alert('Category deleted successfully!');
+        // alert('Category deleted successfully!');
         this.getCatefories(); // Refresh list
       });
     }

@@ -24,6 +24,8 @@ export class Productdetails {
   uploadedImages: File[] = [];
   mainImage!: string;
   imageBaseUrl: string = 'http://localhost:3000/uploads/products/';
+  newOffer: string = '';
+  // edited: boolean = true;
 
 
   constructor(
@@ -55,18 +57,15 @@ export class Productdetails {
 
       if (this.role === 'admin') {
         this.prodService.getProductById(id).subscribe((data) => {
-          
+
           this.product = data;
-          // this.product.offers = [
-          //   'Get 10% off on your first order',
-          //   'Free shipping on orders above ₹499',
-          //   'Buy 1 Get 1 Free on select items',
-          //   'Extra 5% discount with HDFC cards',
-          //   'Flat ₹100 off on prepaid orders'
-          // ];
-          // this.product.offers = data.offerId?.map((offer: any) => offer.description);
-          
-          console.log(this.product.offerId);
+
+          this.product.offerId = this.product.offerId.map(offer => ({
+            ...offer,
+            edited: false
+          }));
+
+
           if (Array.isArray(data.images)) {
             this.imageList = data.images;
             if (this.imageList?.length > 0) {
@@ -99,8 +98,53 @@ export class Productdetails {
   }
 
   addOffer() {
-    this.product.offers = this.product.offers || [];
-    this.product.offers.push('');
+    const prodId = this.route.snapshot.params['id'];
+
+    if (!this.product.offerId) {
+      this.product.offerId = [];
+    }
+
+    const trimmedOffer = this.newOffer.trim();
+    if (trimmedOffer) {
+      const newOfferObj = {productId: prodId, description: trimmedOffer };
+      
+      this.product.offerId.push(newOfferObj);
+      this.prodService.addOffer(prodId, newOfferObj).subscribe({
+        next: (res) => {
+          console.log('Offer added successfully', res);
+          this.newOffer = '';
+        },
+        error: (err) => {
+          console.error('Failed to add offer:', err);
+        }
+      });
+    }
+  }
+
+  updateOffer(index: number) {
+    const offer = this.product.offerId[index];
+    const prodId = this.route.snapshot.params['id'];
+    if (!offer || !offer.description || !offer._id) {
+      console.warn('Invalid offer data:', offer);
+      return;
+    }
+
+    const payload = {
+      offerId: offer._id,
+      description: offer.description
+    };
+
+    console.log(payload);
+
+    this.prodService.updateOffer(prodId, payload).subscribe({
+      next: (res) => {
+        console.log('Offer updated successfully', res);
+        offer.edited = false;
+      },
+      error: (err) => {
+        console.error('Failed to update offer:', err);
+      }
+    });
   }
 
   // updateProduct() {

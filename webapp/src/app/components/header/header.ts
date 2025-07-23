@@ -44,7 +44,6 @@ export class Header {
   onSearch(): void {
     if (this.searchQuery?.trim()) {
       console.log('Searching for:', this.searchQuery);
-      // Add search API or navigation logic here
     }
   }
 

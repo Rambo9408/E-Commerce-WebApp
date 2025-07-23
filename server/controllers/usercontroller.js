@@ -97,7 +97,7 @@ const addMultipleEmployees = async (req, res) => {
             return {
                 ...rest,
                 password: hashPassword,
-                role: user.role || 'employee' // default role
+                role: user.role || 'employee'
             };
         }));
 

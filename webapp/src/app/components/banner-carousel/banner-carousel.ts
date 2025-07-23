@@ -25,7 +25,7 @@ export class BannerCarousel implements OnInit {
   autoSlide() {
     this.intervalId = setInterval(() => {
       this.nextSlide();
-    }, 4000);
+    }, 2000);
   }
 
   nextSlide() {

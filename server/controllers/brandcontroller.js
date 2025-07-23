@@ -56,28 +56,24 @@ const deleteBrand = async (req, res) => {
     try {
         const id = req.params.id;
 
-        // Step 1: Find the brand first to get image path
         const brand = await Brands.findById(id);
         if (!brand) {
             return res.status(404).send({ message: `Brand not found with id ${id}` });
         }
 
-        // Step 2: Delete the brand from DB
         await Brands.findByIdAndDelete(id);
 
-        // Step 3: Delete the image file from uploads folder
+        // Delete the image file from uploads folder
         const imagePath = path.join(__dirname, '..', brand.image); // full path to the file
 
         fs.unlink(imagePath, (err) => {
             if (err) {
                 console.error("File deletion failed:", err.message);
-                // File not found or other issue, still proceed
             } else {
                 console.log("Image file deleted:", imagePath);
             }
         });
 
-        // Step 4: Send response
         res.send({ message: "Brand was deleted successfully!" });
 
     } catch (err) {
@@ -90,19 +86,19 @@ const deleteBrand = async (req, res) => {
 
 const addMultipleBrands = async (req, res) => {
     try {
-        const Products = req.body;
-        if (!Array.isArray(Products) || Products.length === 0) {
+        const Brands = req.body;
+        if (!Array.isArray(Brands) || Brands.length === 0) {
             return res.status(400).send({ message: "Request body must be a non-empty array of Brands." });
         }
 
-        const insertedProducts = await Brands.insertMany(Products);
+        const insertedBrands = await Brands.insertMany(Brands);
         res.status(201).json({
-            message: "Products added successfully.",
-            data: insertedProducts
+            message: "Brands added successfully.",
+            data: insertedBrands
         });
     } catch (err) {
         res.status(500).send({
-            message: err.message || "Some error occurred while adding Products."
+            message: err.message || "Some error occurred while adding Brands."
         });
     }
 
@@ -113,11 +109,11 @@ const findBrands = async (req, res) => {
         const id = req.params.id;
 
         if (id) {
-            const getEmployee = await Brands.findById(id);
-            if (!getEmployee) {
+            const getBrand = await Brands.findById(id);
+            if (!getBrand) {
                 res.status(404).send({ message: "Not found brand with id " + id });
             } else {
-                res.send(getEmployee);
+                res.send(getBrand);
             }
         } else {
             const allbrands = await Brands.find();

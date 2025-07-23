@@ -14,14 +14,24 @@ const createCategory = async (req, res) => {
         });
 
         const data = await category.save();
-        res.status(201).send(data);
-        res.json(category.toObject())
+        res.status(201).json(data.toObject());
+        // res.status(201).send(data);
+        // res.json(category.toObject())
+        //.toObject() converts the Mongoose document into a plain JavaScript object, stripping away all the extra stuff.
     } catch (err) {
         res.status(500).send({
             message: err.message || "Some error occurred while creating a category."
         });
     }
 };
+
+/*In most cases, We don’t need to call .toObject() manually, because:
+
+res.json() and res.send() automatically serialize Mongoose documents properly
+
+Mongoose will strip internal properties automatically during JSON conversion (toJSON() is internally called)
+
+*/
 
 const updateCategory = async (req, res) => {
     try {
@@ -69,19 +79,19 @@ const deleteCategory = async (req, res) => {
 
 const addMultipleCategories = async (req, res) => {
     try {
-        const users = req.body;
-        if (!Array.isArray(users) || users.length === 0) {
-            return res.status(400).send({ message: "Request body must be a non-empty array of users." });
+        const categories = req.body;
+        if (!Array.isArray(categories) || categories.length === 0) {
+            return res.status(400).send({ message: "Request body must be a non-empty array of categories." });
         }
 
-        const insertedUsers = await Category.insertMany(users);
+        const insertedCategories = await Category.insertMany(categories);
         res.status(201).json({
             message: "Category added successfully.",
-            data: insertedUsers
+            data: insertedCategories
         });
     } catch (err) {
         res.status(500).send({
-            message: err.message || "Some error occurred while adding users."
+            message: err.message || "Some error occurred while adding categories."
         });
     }
 
@@ -91,20 +101,20 @@ const findCategory = async (req, res) => {
     try {
         const id = req.params.id;
 
-        if(id){
-            const getEmployee = await Category.findById(id);
-            if (!getEmployee) {
+        if (id) {
+            const getCategory = await Category.findById(id);
+            if (!getCategory) {
                 res.status(404).send({ message: "No Category Found with id " + id });
             } else {
-                res.send(getEmployee);
+                res.send(getCategory);
             }
-        }else{
-            const allEmployees = await Category.find();
-            res.send(allEmployees);
+        } else {
+            const allCategories = await Category.find();
+            res.send(allCategories);
         }
     } catch (err) {
         res.status(500).send({ message: err.message || "Error Occurred while retrieving Category information" });
     }
 }
 
-module.exports = { createCategory, updateCategory, deleteCategory, addMultipleCategories, findCategory};
+module.exports = { createCategory, updateCategory, deleteCategory, addMultipleCategories, findCategory };

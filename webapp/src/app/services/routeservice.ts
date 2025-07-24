@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' //This makes the service available globally across the app (singleton instance).
 })
 export class RouterService {
   isAdminRoute$ = new BehaviorSubject(false);

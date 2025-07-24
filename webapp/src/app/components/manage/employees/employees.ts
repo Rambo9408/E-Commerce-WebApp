@@ -54,8 +54,8 @@ export class Employees implements AfterViewInit {
 
   toggleAddEmployeePopup(): void {
     const dialogRef = this.dialog.open(EmployeeForm, {
-      width: '500px',
-      height: '500px',
+      width: '90vw',
+      maxHeight: '90vh',
       disableClose: false
     });
 

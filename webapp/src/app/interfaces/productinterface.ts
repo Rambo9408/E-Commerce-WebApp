@@ -13,5 +13,5 @@ export interface Productinterface {
     reviews?: number;
     sizes?: string[];
     frameColors?: string[];
-    offers?: string[];
+    // offers?: string[];
 }

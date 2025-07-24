@@ -44,7 +44,6 @@ export class Home {
     }
   ];
 
-  // ✅ Use correct object syntax with type
   dropdowns: Record<CategoryKey, boolean> = {
     fashion: false,
     electronics: false,

@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Login } from '../login/login'; // 👈 Adjust the path as needed
+import { Login } from '../login/login';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({

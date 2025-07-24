@@ -1,12 +1,19 @@
 .form-wrapper {
   background: #f9f9fb;
-  padding: 30px;
+  padding: 20px;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  margin: 30px auto;
+  width: auto;
+  /* increased width */
+  max-width: 90vw;
+  /* prevents overflow on smaller screens */
+  overflow-y: auto;
+  /* allow scroll if height exceeds */
+  max-height: 90vh;
+  /* prevents full window overflow */
   font-family: "Segoe UI", sans-serif;
 }
+
 
 .form-wrapper strong {
   font-size: 24px;

@@ -57,9 +57,9 @@ export class BrandForm {
       formData.append('image', this.file);  // Only add if new file selected
     }
 
-    formData.forEach((value, key) => {
-      console.log(key + ':', value);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(key + ':', value);
+    // });
 
     const url = this.data?._id
       ? `http://localhost:3000/brand/updatebrand/${this.data._id}`

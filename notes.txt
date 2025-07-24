@@ -1,0 +1,8 @@
+@Injectable() is a decorator in Angular that marks a class as available for dependency injection (DI).
+we use observable to handle asynchronous data, we can also use promise(in java script) to do that in angular.
+a promise can not handle a stream of data like a stream of asynchronous data, because as soon as first chunk of data is received promise will say " it has recived value".
+A promise will return a data even if there is no one is no one to use that data, but observale is going to return a data only when somone is going to use that data.
+observable is not native to angular it is provided by RxJS(Reactive extention language for JS) library and RxJS lib used observer pattern.
+this.brandList = await this.brandService.getBrands().toPromise(); we can use the asynchronus data get like this too but angular is much more prferable.
+Angular normally uses Zone.js to detect async changes (e.g., HTTP, timers) and if we use zoneless project then provideZonelessChangeDetection() is shown and Going zoneless gives better performance but requires manual change detection (via ChangeDetectorRef.detectChanges()).
+ng generate interceptor interceptors/auth this cmd is used to add the interceptor.

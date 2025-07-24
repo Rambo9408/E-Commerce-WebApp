@@ -47,8 +47,10 @@ export class Login {
         this.dialogRef.close();
         if (response.user.role === 'admin') {
           this.router.navigate(['/admin']);
-        } else {
+        } else if(response.user.role === 'employee') {
           this.router.navigate(['/employee']);
+        }else{
+          this.router.navigate(['/user']);
         }
       },
       error: (err) => {

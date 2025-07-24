@@ -12,3 +12,11 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+html, body {
+  overflow-x: hidden;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow-x: hidden;
+}

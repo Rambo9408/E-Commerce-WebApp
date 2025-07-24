@@ -1,7 +1,13 @@
 <div class="form-wrapper">
-    <div style="font-size: 22px; margin: 10px 0px 10px 0px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 22px; margin: 10px 0;">
         <strong>{{ isEditing ? 'Update Employee' : 'Add New Employee' }}</strong>
+
+        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
+
+
 
     <form class="example-form" #userForm="ngForm" (ngSubmit)="submitEmployee()">
         <mat-form-field appearance="fill" class="full-width">

@@ -5,6 +5,7 @@ import { Employeelayout } from './components/layout/employeelayout/employeelayou
 import { Customerlayout } from './components/layout/customerlayout/customerlayout';
 import { AuthGuard } from './guards/auth-guard';
 
+//lazy-loaded components
 export const routes: Routes = [
   {
     path: '',
@@ -91,8 +92,8 @@ export const routes: Routes = [
       }
     ]
   },
-   {
-    path: 'customer',
+  {
+    path: 'user',
     component: Customerlayout,
     canActivateChild: [AuthGuard],
     data: { role: 'customer' },

@@ -1,11 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Productservice } from '../../../services/productservice';
 import { Productinterface } from '../../../interfaces/productinterface';
 import { Employeeservice } from '../../../services/employeeservice';
 import { Employeeinterface } from '../../../interfaces/employeeinterface';
 import { ActivatedRoute } from '@angular/router';
+import { Brandservice } from '../../../services/brandservice';
+import { Categoryservice } from '../../../services/categoryservice';
+import { Categoryinterface } from '../../../interfaces/categoryinterface';
+import { Brandinterface } from '../../../interfaces/brandinterface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-productdetails',
@@ -25,64 +30,89 @@ export class Productdetails {
   mainImage!: string;
   imageBaseUrl: string = 'http://localhost:3000/uploads/products/';
   newOffer: string = '';
+  brandList!: Brandinterface[];
+  selectedBrand!: Brandinterface;
+  categoryList!: Categoryinterface[];
+  selectedCategory!: Categoryinterface;
   // edited: boolean = true;
 
 
   constructor(
     private prodService: Productservice,
     private empService: Employeeservice,
+    private category: Categoryservice,
+    private brandservice: Brandservice,
     public route: ActivatedRoute,
     private cd: ChangeDetectorRef,
   ) { }
 
-  // ngOnInit(): void {
-  //   this.empService.getEmployees().subscribe((employeeList: Employeeinterface[]) => {
-  //     this.employee = employeeList;
-  //     const currentEmployee = employeeList[0];
-
-  //     this.role = currentEmployee?.role || 'employee';
-
-  //     if (this.role === 'admin') {
-  //       this.prodService.getProducts().subscribe((data: Productinterface[]) => {
-  //         this.product = data;
-  //       });
-  //     }
-  //   });
-  // }
-
   ngOnInit(): void {
+    this.loadProduct();
+  }
+
+  loadProduct(): void {
     const id = this.route.snapshot.params['id'];
+
     this.empService.getCurrentEmployee().subscribe((user: Employeeinterface) => {
       this.role = user.role || 'employee';
 
       if (this.role === 'admin') {
-        this.prodService.getProductById(id).subscribe((data) => {
+        // Load both product and dropdowns in parallel
+        forkJoin({
+          product: this.prodService.getProductById(id),
+          brands: this.brandservice.getBrands(),
+          categories: this.category.getCategories()
+        }).subscribe(({ product, brands, categories }) => {
+          this.product = product;
+          this.brandList = brands;
+          this.categoryList = categories;
 
-          this.product = data;
+          console.log("this.product.brandId: ", this.product.brandId._id);
+          console.log("brandList: ", this.brandList);
+
+          // Match and assign full objects
+          this.product.brandId = this.brandList.find(
+            (b) => b._id === this.product.brandId._id
+          ) || this.product.brandId;
+
+
+          this.product.categoryId = this.categoryList.find(
+            (c) => c._id === this.product.categoryId._id
+          ) || this.product.categoryId; // fallback to original if not found
 
           this.product.offerId = this.product.offerId.map(offer => ({
             ...offer,
             edited: false
           }));
 
-
-          if (Array.isArray(data.images)) {
-            this.imageList = data.images;
-            if (this.imageList?.length > 0) {
-              this.mainImage = this.imageBaseUrl + this.imageList[0];
-            } // Only safe if array exists
+          if (Array.isArray(product.images)) {
+            this.imageList = product.images;
+            this.mainImage = this.imageList.length > 0 ? this.imageBaseUrl + this.imageList[0] : '';
           } else {
             this.imageList = [];
             this.mainImage = '';
           }
+
           this.cd.detectChanges();
         });
       }
     });
   }
 
+
+  loadDropdowns(): void {
+    this.category.getCategories().subscribe(data => {
+      this.categoryList = data;
+    });
+
+    this.brandservice.getBrands().subscribe(data => {
+      this.brandList = data;
+    });
+  }
+
+
   deleteImage(index: number) {
-    this.imageList.splice(index, 1);// this will only remove image from the DOM not from the backend
+    this.imageList.splice(index, 1);
   }
 
   handleImageUpload(event: any) {
@@ -93,7 +123,6 @@ export class Productdetails {
       this.uploadedImages.push(file);
     }
 
-    // Preview (optional) - just for UI. Do not include in update call.
     console.log(this.uploadedImages);
   }
 
@@ -106,13 +135,14 @@ export class Productdetails {
 
     const trimmedOffer = this.newOffer.trim();
     if (trimmedOffer) {
-      const newOfferObj = {productId: prodId, description: trimmedOffer };
-      
+      const newOfferObj = { productId: prodId, description: trimmedOffer };
+
       this.product.offerId.push(newOfferObj);
       this.prodService.addOffer(prodId, newOfferObj).subscribe({
         next: (res) => {
           console.log('Offer added successfully', res);
           this.newOffer = '';
+          this.loadProduct();
         },
         error: (err) => {
           console.error('Failed to add offer:', err);
@@ -140,6 +170,7 @@ export class Productdetails {
       next: (res) => {
         console.log('Offer updated successfully', res);
         offer.edited = false;
+        this.loadProduct();
       },
       error: (err) => {
         console.error('Failed to update offer:', err);
@@ -147,15 +178,35 @@ export class Productdetails {
     });
   }
 
-  // updateProduct() {
-  //   const offerDescriptions = this.product.offers.filter(o => o && o.trim() !== '');
-  //   const productId = this.product._id;
+  deleteOffer(_id: string) {
+    const payload = {
+      productId: this.route.snapshot.params['id'],
+    };
 
-  //   this.http.post(`/api/offers/update/${productId}`, {
-  //     offers: offerDescriptions
-  //   }).subscribe(response => {
-  //     console.log('Offers updated!', response);
-  //   });
-  // }
+    this.prodService.deleteOffer(_id, payload).subscribe({
+      next: (res) => {
+        console.log('Offer deleted successfully', res);
+        this.loadProduct();
+      },
+      error: (err) => {
+        console.error('Failed to delete offer:', err);
+      }
+    });
+  }
+
+
+  updateProduct(formdta: NgForm) {
+    const productId = this.route.snapshot.params['id'];
+    this.prodService.updateProduct(productId, formdta.value).subscribe({
+      next: (res) => {
+        alert("Product Updated Successfully.")
+        console.log('Product Updated successfully', res);
+        this.loadProduct();
+      },
+      error: (err) => {
+        console.error('Failed to Update Product:', err);
+      }
+    })
+  }
 
 }

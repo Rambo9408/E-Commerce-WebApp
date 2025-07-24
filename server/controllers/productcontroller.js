@@ -47,15 +47,19 @@ const addProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const id = req.params.id;
+        const { brand, category, productName, price, discount } = req.body;
 
         if (!req.body || Object.keys(req.body).length === 0) {
             return res.status(400).send({ message: "Data to update cannot be empty." });
         }
 
-        const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-            new: true,
-            runValidators: true
-        });
+        const existingProduct = await Product.findById(id);
+        existingProduct.name = productName ?? existingProduct.name;
+        existingProduct.price = price ?? existingProduct.price;
+        existingProduct.discount = discount ?? existingProduct.discount;
+
+
+        const updatedProduct = await existingProduct.save();
 
         if (!updatedProduct) {
             return res.status(404).send({ message: `Cannot update product with ID ${id}. Product not found.` });
@@ -121,7 +125,7 @@ const find = async (req, res) => {
                 .populate("categoryId", "name")     // same here
                 .populate({
                     path: "offerId",
-                    select: ["description","ProductID"],
+                    select: ["description", "ProductID"],
                 });
 
             if (!product) {
@@ -136,7 +140,7 @@ const find = async (req, res) => {
             .populate("categoryId", "name")
             .populate({
                 path: "offerId",
-                select: ["description","ProductID"],
+                select: ["description", "ProductID"],
             });
 
         res.status(200).json(allProducts);

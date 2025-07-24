@@ -15,6 +15,7 @@ export class Productservice {
   private deleteUrl = "http://localhost:3000/products/deleteProduct";
   private offerAdd = "http://localhost:3000/offers/add";
   private offerUpdate = "http://localhost:3000/offers/update";
+  private offerDelete = "http://localhost:3000/offers/delete";
 
   constructor(private http: HttpClient) { }
 
@@ -43,12 +44,18 @@ export class Productservice {
     return this.http.delete<Productinterface>(`${this.deleteUrl}/${_id}`);
   }
 
-  updateOffer(id: string, data : any) {
-    return this.http.post<Productinterface>(`${this.offerUpdate}/${id}`, data);
+  updateOffer(id: string, data: any) {
+    return this.http.put<Productinterface>(`${this.offerUpdate}/${id}`, data);
   }
 
-  addOffer(id: string, data: any){
+  addOffer(id: string, data: any) {
     return this.http.post<Productinterface>(`${this.offerAdd}/${id}`, data);
+  }
+
+  deleteOffer(_id: string, data: any) {
+    return this.http.delete<Productinterface>(`${this.offerDelete}/${_id}`,{
+      body: data
+    });
   }
 
 }

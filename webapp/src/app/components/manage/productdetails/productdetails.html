@@ -24,57 +24,71 @@
 
 
     <!-- Right: Product Details -->
-    <div class="product-details">
-        <div class="form-group">
-            <label class="name" for="brand"><strong>Brand Name: </strong></label>
-            <input type="text" id="brand" name="brand" [(ngModel)]="product.brandId.name" placeholder="Brand" />
-        </div>
-
-        <div class="form-group">
-            <label class="name" for="category"><strong>Category Name: </strong></label>
-            <input type="text" id="category" name="category" [(ngModel)]="product.categoryId.name"
-                placeholder="Category" />
-        </div>
-
-        <div class="form-group">
-            <label class="name" for="productName"><strong>Product Name: </strong></label>
-            <input type="text" id="productName" name="productName" [(ngModel)]="product.name"
-                placeholder="Product Name" />
-        </div>
-
-
-        <div class="price">
-            <label>Price: ₹</label>
-            <input type="number" [(ngModel)]="product.price" placeholder="Enter price" />
-        </div>
-
-        <div class="price">
-            <label>Discount (%): </label>
-            <input type="number" [(ngModel)]="product.discount" placeholder="Enter discount %" />
-        </div>
-
-
-        <div class="offers">
-            <h3>Available Offers</h3>
-            <ul>
-                <li *ngFor="let offer of product.offerId; let i = index">
-                    <input type="text" [(ngModel)]="offer.description" (ngModelChange)="offer.edited = true"
-                        placeholder="Offer {{ i + 1 }}" />
-                    <a *ngIf="offer.edited" (click)="updateOffer(i)"
-                        style="margin-left: 5px; color: blue; cursor: pointer;">
-                        Edit
-                    </a>
-                </li>
-            </ul>
-            <div class="add-offer">
-                <input type="text" [(ngModel)]="newOffer" placeholder="Enter new offer" name="newOffer" />
-
-                <button type="button" (click)="addOffer()">+ Add Offer</button>
+    <form (ngSubmit)="updateProduct(productForm)" style="width: 397px;" #productForm="ngForm">
+        <!-- Right: Product Details -->
+        <div class="product-details">
+            <div class="form-group">
+                <label><strong>Brand Name: </strong></label>
+                <select [(ngModel)]="product.brandId" name="brandId">
+                    <option *ngFor="let brand of brandList" [ngValue]="brand">
+                        {{ brand.name }}
+                    </option>
+                </select>
+                <!-- <input type="text" id="brand" name="brand" [(ngModel)]="product.brandId.name" placeholder="Brand" /> -->
             </div>
 
+            <div class="form-group">
+                <label><strong>Category Name: </strong></label>
+                <select [(ngModel)]="product.categoryId" name="categoryId">
+                    <option *ngFor="let category of categoryList" [ngValue]="category">
+                        {{ category.name }}
+                    </option>
+                </select>
+                <!-- <input type="text" id="category" name="category" [(ngModel)]="product.categoryId.name" placeholder="Category" /> -->
+            </div>
+
+            <div class="form-group">
+                <label class="name" for="productName"><strong>Product Name: </strong></label>
+                <input type="text" id="productName" name="productName" [(ngModel)]="product.name"
+                    placeholder="Product Name" />
+            </div>
+
+            <div class="price">
+                <label>Price: ₹</label>
+                <input type="number" name="price" [(ngModel)]="product.price" placeholder="Enter price" />
+            </div>
+
+            <div class="price">
+                <label>Discount (%): </label>
+                <input type="number" name="discount" [(ngModel)]="product.discount" placeholder="Enter discount %" />
+            </div>
+
+            <div class="offers">
+                <h3>Available Offers</h3>
+                <ul>
+                    <li *ngFor="let offer of product.offerId; let i = index">
+                        <input type="text" [(ngModel)]="offer.description" name="offerDesc{{i}}"
+                            (ngModelChange)="offer.edited = true" placeholder="Offer {{ i + 1 }}" />
+                        <a *ngIf="offer.edited" (click)="updateOffer(i)"
+                            style="margin-left: 5px; color: blue; cursor: pointer;">
+                            Edit
+                        </a>
+                        <a (click)="deleteOffer(offer._id!)" style="margin-left: 5px; color: blue; cursor: pointer;">
+                            Delete
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="add-offer">
+                    <input type="text" [(ngModel)]="newOffer" name="newOffer" placeholder="Enter new offer" />
+                    <button type="button" (click)="addOffer()">+ Add Offer</button>
+                </div>
+            </div>
 
             <div class="action-buttons">
                 <button type="submit" class="add-to-cart">Update</button>
             </div>
         </div>
-    </div>
+    </form>
+
+</div>

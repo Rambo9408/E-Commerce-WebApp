@@ -97,7 +97,6 @@ export class Brands implements AfterViewInit {
 
 
   deleteBrand(row: Brandinterface) {
-    // Confirm and delete
     this.http.delete(`http://localhost:3000/brand/deleteBrand/${row._id}`).subscribe(() => {
       this.loadBrands();
     });

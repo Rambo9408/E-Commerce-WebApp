@@ -51,6 +51,7 @@ app.use('/products', prodRoute);
 
 app.use('/offers/add/:id', offerController.createOffer);
 app.use('/offers/update/:id', offerController.updateOffer);
+app.use('/offers/delete/:id', offerController.deleteOffer);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

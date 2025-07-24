@@ -8,7 +8,7 @@
 /* Updated product images layout */
 .product-images {
   display: flex;
-  max-width: 500px;
+  width: 45%;
   max-height: 500px;
   border: 1px solid #ddd;
   padding: 10px;
@@ -17,6 +17,7 @@
 
 /* Vertical thumbnail column */
 .thumbs {
+  width: 60px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -44,7 +45,7 @@
 
 /* Main image */
 .main-img {
-  width: 400px;
+  width: 436px;
   height: 480px;
   object-fit: contain;
   border: 1px solid #ccc;
@@ -53,7 +54,7 @@
 /* Product details section */
 .product-details {
   flex: 1;
-  padding-right: 40px;
+  /* padding-right: 40px; */
 }
 
 h1 {
@@ -149,7 +150,9 @@ button.active {
   border-radius: 4px;
   font-weight: bold;
 }
-.edit-images-section{
+
+.edit-images-section {
   overflow-y: auto;
   max-height: 500px;
+  width: 260px;
 }

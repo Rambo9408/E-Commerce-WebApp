@@ -2,43 +2,33 @@ const Offers = require('../models/offers');
 const Product = require('../models/product');
 
 const createOffer = async (req, res) => {
-    try {
-        console.log(req.body);
+  try {
+    console.log(req.body);
 
-        const { description, productId } = req.body;
+    const { description, productId } = req.body;
 
-        if (!description || !productId) {
-            return res.status(400).json({ message: "Missing required fields" });
-        }
-
-        const offer = new Offers({
-            description: description,
-            productID: [productId]
-        });
-        await offer.save();
-        // const createdOffers = [];
-
-        // for (const desc of offers) {
-        //     const offer = new Offers({
-        //         description: desc,
-        //         productID: [productId]
-        //     });
-        //     await offer.save();
-        //     createdOffers.push(offer._id); // store only the _id
-        // }
-
-        // await Product.findByIdAndUpdate(productId, {
-        //     $addToSet: { offerId: { $each: createdOffers } } // avoid duplicates
-        // });
-
-        await Product.findByIdAndUpdate(productId, {
-            $addToSet: { offerId: offer._id } 
-        });
-
-        res.status(201).json({ message: "Offers created and linked to product", offerIds: createdOffers });
-    } catch (err) {
-        res.status(500).json({ message: "Error creating offers", error: err.message });
+    if (!description || !productId) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
+
+    const offer = new Offers({
+      description,
+      productID: [productId]
+    });
+
+    await offer.save();
+
+    await Product.findByIdAndUpdate(productId, {
+      $addToSet: { offerId: offer._id }  // ensure no duplicate links
+    });
+
+    res.status(201).json({
+      message: "Offer created and linked to product",
+      offerId: offer._id
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating offer", error: err.message });
+  }
 };
 
 const updateOffer = async (req, res) => {
@@ -91,4 +81,42 @@ const updateOffer = async (req, res) => {
     }
 };
 
-module.exports = { createOffer, updateOffer };
+const deleteOffer = async (req, res) => {
+    try {
+        const offerId = req.params.id;
+        const { productId } = req.body;
+
+        if (!offerId || !productId) {
+            return res.status(400).json({ error: 'Missing offerId or productId' });
+        }
+
+        // Step 1: Delete the offer
+        const deletedOffer = await Offers.findByIdAndDelete(offerId);
+        if (!deletedOffer) {
+            return res.status(404).json({ error: 'Offer not found' });
+        }
+
+        // Step 2: Remove the offerId from the product's offerId array
+        const updatedProduct = await Product.findByIdAndUpdate(
+            productId,
+            { $pull: { offerId: offerId } },
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        return res.status(200).json({
+            message: 'Offer deleted and removed from product successfully',
+            deletedOffer,
+            updatedProduct
+        });
+    } catch (err) {
+        console.error('Error deleting offer:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+module.exports = { createOffer, updateOffer, deleteOffer };

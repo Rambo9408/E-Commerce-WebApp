@@ -12,6 +12,7 @@ export class RouterService {
   isCustomerRoute$ = new BehaviorSubject(false);
 
   constructor(private router: Router) {
+    //NavigationEnd is used in Angular's Router to detect when a navigation event has successfully completed.
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.isAdminRoute$.next(event.urlAfterRedirects.startsWith('/admin'));
       this.isEmployeeRoute$.next(event.urlAfterRedirects.startsWith('/employee'));

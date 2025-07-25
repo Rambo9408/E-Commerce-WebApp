@@ -25,7 +25,7 @@ export class Brands implements AfterViewInit {
   dataSource = new MatTableDataSource<Brandinterface>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private http: HttpClient, private dialog: MatDialog, private brandservice: Brandservice) {
     this.loadBrands();

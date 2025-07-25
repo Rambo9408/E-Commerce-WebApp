@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   private checkRole(expectedRole: string): boolean {
-    const userRole = localStorage.getItem('role'); // store role during login
+    const userRole = localStorage.getItem('role');
     return userRole === expectedRole;
   }
 
@@ -41,9 +41,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return false;
     }
 
-    const expectedRole = route.data['role'];
+    const expectedRole = route.parent?.data['role'];    
     if (expectedRole && !this.checkRole(expectedRole)) {
       this.router.navigate(['/']);
+      localStorage.clear();
       return false;
     }
 

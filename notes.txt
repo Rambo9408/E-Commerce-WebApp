@@ -6,3 +6,4 @@ observable is not native to angular it is provided by RxJS(Reactive extention la
 this.brandList = await this.brandService.getBrands().toPromise(); we can use the asynchronus data get like this too but angular is much more prferable.
 Angular normally uses Zone.js to detect async changes (e.g., HTTP, timers) and if we use zoneless project then provideZonelessChangeDetection() is shown and Going zoneless gives better performance but requires manual change detection (via ChangeDetectorRef.detectChanges()).
 ng generate interceptor interceptors/auth this cmd is used to add the interceptor.
+@ViewChild is for accessing a component or directive instance that already exists in the template, not for sending values into a dynamically loaded dialog.
